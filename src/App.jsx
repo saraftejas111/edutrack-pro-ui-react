@@ -1,5 +1,6 @@
-
 import { Route, Routes } from "react-router-dom";
+import ProtectedRoute from "./ProtectedRoute";
+
 import AddStudent from "./AddStudent";
 import AddUser from "./AddUser";
 import AdminDashboard from "./AdminDashboard";
@@ -17,28 +18,55 @@ import ViewAttendance from "./ViewAttendance";
 import Welcome from "./Welcome";
 
 function App() {
-
-  console.log(import.meta.env.VITE_API_URL)
   return (
     <>
       <Routes>
         <Route path="/" element={<Welcome />} />
         <Route path="/login" element={<Login />} />
-        <Route path="/admin-dashboard" element={<AdminDashboard />} />
-        <Route path="/faculty-dashboard" element={<FacultyDashboard />} />
 
-        <Route path="/add-user" element={<AddUser />} />
-        <Route path="/all-users" element={<AllUser />} />
-        <Route path="/update-user/:username" element={<UpdateUser />} />
-        <Route path="/all-subject" element={<AllSubject />} />
+        <Route path="/admin-dashboard" element={
+          <ProtectedRoute><AdminDashboard /></ProtectedRoute>
+        } />
 
-        <Route path="/my-profile" element={<Profile />} />
+        <Route path="/faculty-dashboard" element={
+          <ProtectedRoute><FacultyDashboard /></ProtectedRoute>
+        } />
 
-        <Route path="/add-student" element={<AddStudent />} />
-        <Route path="/all-students" element={<AllStudents />} />
+        <Route path="/add-user" element={
+          <ProtectedRoute><AddUser /></ProtectedRoute>
+        } />
 
-        <Route path="/view-attendance" element={<ViewAttendance />} />
-        <Route path="/mark-attendance" element={<MarkAttendance />} />
+        <Route path="/all-users" element={
+          <ProtectedRoute><AllUser /></ProtectedRoute>
+        } />
+
+        <Route path="/update-user/:username" element={
+          <ProtectedRoute><UpdateUser /></ProtectedRoute>
+        } />
+
+        <Route path="/all-subject" element={
+          <ProtectedRoute><AllSubject /></ProtectedRoute>
+        } />
+
+        <Route path="/my-profile" element={
+          <ProtectedRoute><Profile /></ProtectedRoute>
+        } />
+
+        <Route path="/add-student" element={
+          <ProtectedRoute><AddStudent /></ProtectedRoute>
+        } />
+
+        <Route path="/all-students" element={
+          <ProtectedRoute><AllStudents /></ProtectedRoute>
+        } />
+
+        <Route path="/view-attendance" element={
+          <ProtectedRoute><ViewAttendance /></ProtectedRoute>
+        } />
+
+        <Route path="/mark-attendance" element={
+          <ProtectedRoute><MarkAttendance /></ProtectedRoute>
+        } />
       </Routes>
 
       <Footer />

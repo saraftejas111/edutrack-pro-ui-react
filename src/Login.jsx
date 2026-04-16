@@ -13,32 +13,36 @@ function Login() {
     setLoginRequest((prev) => ({ ...prev, [name]: value }));
   };
 
-  const submitHandler = async (e) => {
-    e.preventDefault();
-    setError("");
-    setLoading(true);
-    try {
-      const response = await userAPI.loginUser(loginRequest);
-      const user = response.data;
-      console.log(user)
-      if (user && user.username) {
-        localStorage.setItem("username", user.username);
-        localStorage.setItem("role", user.role);
-        if (user.role === "admin") {
-          navigate("/admin-dashboard");
-        } else if (user.role === "faculty") {
-          navigate("/faculty-dashboard");
-        } else {
-          navigate("/");
-        }
+const submitHandler = async (e) => {
+  e.preventDefault();
+  setError("");
+  setLoading(true);
+
+  try {
+    const response = await userAPI.loginUser(loginRequest);
+    const user = response.data;
+
+    if (user && user.username) {
+      localStorage.setItem("isLoggedIn", "true");
+      localStorage.setItem("username", user.username);
+      localStorage.setItem("role", user.role);
+
+      if (user.role === "admin") {
+        navigate("/admin-dashboard", { replace: true });
+      } else if (user.role === "faculty") {
+        navigate("/faculty-dashboard", { replace: true });
       } else {
-        setError("Invalid username or password");
+        navigate("/", { replace: true });
       }
-    } catch (err) {
-      setError("Login failed. Please try again.");
+    } else {
+      setError("Invalid username or password");
     }
-    setLoading(false);
-  };
+  } catch (err) {
+    setError("Login failed. Please try again.");
+  }
+
+  setLoading(false);
+};
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-400 via-purple-400 to-pink-400">
